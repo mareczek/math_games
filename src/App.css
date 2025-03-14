@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #4a6bff;
+  --primary-color: #33a4f5;
   --secondary-color: #ff6b6b;
   --background-color: #f5f7ff;
   --text-color: #333;
@@ -132,6 +132,7 @@ button:active {
 }
 
 .keypad-button {
+  background-color: var(--primary-color);
   font-size: 1.3rem;
   padding: 0.7rem;
 }
