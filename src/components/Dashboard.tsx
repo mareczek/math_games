@@ -38,6 +38,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectMode }) => {
           className="game-mode"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
+          onClick={() => handleModeSelect('mixed100')}
+          style={{ padding: '1rem', margin: '0.5rem 0' }}
+        >
+          <h3 className="game-mode-title" style={{ fontSize: '1.3rem', marginBottom: '0.3rem' }}>Mieszane Działania do 100</h3>
+          <p className="game-mode-description" style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>Ćwicz dodawanie i odejmowanie liczb do 100</p>
+          <div className="mode-preview" style={{ fontSize: '0.9rem' }}>45 + 32 = ? i 78 - 25 = ?</div>
+        </motion.div>
+
+        <motion.div
+          className="game-mode"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           onClick={() => handleModeSelect('addition')}
           style={{ padding: '1rem', margin: '0.5rem 0' }}
         >

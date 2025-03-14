@@ -25,6 +25,17 @@ const Instructions: React.FC<InstructionsProps> = ({ mode }) => {
             'Postaraj się uzyskać co najmniej 4 poprawne odpowiedzi!',
           ],
         };
+      case 'mixed100':
+        return {
+          title: 'Gra z Mieszanymi Działaniami do 100',
+          instructions: [
+            'Zobaczysz 5 zadań mieszających dodawanie i odejmowanie z liczbami do 100.',
+            'Przy dodawaniu wynik będzie zawsze mniejszy niż 100.',
+            'Przy odejmowaniu obie liczby będą mniejsze niż 100, a wynik zawsze większy od 0.',
+            'Użyj klawiatury ekranowej, aby wprowadzić swoją odpowiedź.',
+            'Postaraj się uzyskać co najmniej 4 poprawne odpowiedzi!',
+          ],
+        };
       case 'addition':
         return {
           title: 'Gra Tylko z Dodawaniem',

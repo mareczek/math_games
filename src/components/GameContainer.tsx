@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import DotVisualizer from './DotVisualizer';
 import Keypad from './Keypad';
 import { generateGameProblems, MathProblem } from '../utils/problemGenerator';
 
@@ -33,8 +32,9 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
   const currentProblem = problems[currentProblemIndex];
 
   const handleKeyPress = (key: string) => {
-    // Limit answer to 2 digits for simplicity
-    if (userAnswer.length < 2) {
+    // For mixed100 mode, allow up to 3 digits, otherwise limit to 2 digits
+    const maxDigits = mode === 'mixed100' ? 3 : 2;
+    if (userAnswer.length < maxDigits) {
       setUserAnswer(prev => prev + key);
     }
   };
@@ -147,40 +147,6 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                     }}
                   >
                     {userAnswer || '?'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Visual representation with dots */}
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '10px',
-                padding: '8px',
-                backgroundColor: 'rgba(74, 107, 255, 0.05)',
-                borderRadius: '12px',
-                width: '100%',
-                maxWidth: '300px'
-              }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '3px', fontWeight: 'bold', fontSize: '0.9rem' }}>
-                      {currentProblem.firstNumber}
-                    </div>
-                    <DotVisualizer number={currentProblem.firstNumber} />
-                  </div>
-                  <div style={{ fontSize: '1.3rem' }}>
-                    {currentProblem.operator}
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '3px', fontWeight: 'bold', fontSize: '0.9rem' }}>
-                      {currentProblem.secondNumber}
-                    </div>
-                    <DotVisualizer
-                      number={currentProblem.secondNumber}
-                      color={currentProblem.operator === '-' ? '#ff6b6b' : undefined}
-                    />
                   </div>
                 </div>
               </div>
