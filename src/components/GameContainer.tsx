@@ -187,7 +187,7 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                     alignItems: 'center',
                     gap: '10px'
                   }}>
-                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', alignSelf: 'flex-end' }}>
                       {currentProblem.firstNumber}
                     </div>
 
@@ -224,7 +224,7 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                     alignItems: 'center',
                     gap: '10px'
                   }}>
-                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', alignSelf: 'flex-start' }}>
                       {currentProblem.secondNumber}
                     </div>
 
