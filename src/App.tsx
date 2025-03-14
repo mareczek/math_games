@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
+import UpdateNotification from './components/UpdateNotification';
+import './components/UpdateNotification.css';
+import VersionDisplay from './components/VersionDisplay';
+import './components/VersionDisplay.css';
 
 // Import components from barrel file
 import { Dashboard, GameContainer, Instructions, ResultScreen } from './components';
@@ -29,6 +33,8 @@ function App() {
             element={<ResultScreen score={score} />}
           />
         </Routes>
+        <UpdateNotification />
+        <VersionDisplay />
       </div>
     </Router>
   );

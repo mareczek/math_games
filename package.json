@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "increment-version": "node scripts/increment-version.js",
+    "prebuild": "npm run increment-version"
   },
   "dependencies": {
     "framer-motion": "^10.16.4",
