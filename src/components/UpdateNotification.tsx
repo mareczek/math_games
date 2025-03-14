@@ -9,7 +9,8 @@ const UpdateNotification = () => {
     const checkForUpdates = async () => {
       try {
         // Add cache-busting query parameter to prevent caching
-        const response = await fetch(`/version.json?cache=${Date.now()}`);
+        // Use the correct path for GitHub Pages
+        const response = await fetch(`${import.meta.env.BASE_URL}version.json?timestamp=${Date.now()}`);
         if (response.ok) {
           const data = await response.json();
           // Compare versions
@@ -30,8 +31,8 @@ const UpdateNotification = () => {
   }, []);
 
   const handleUpdate = () => {
-    // Force reload by navigating to the current URL
-    window.location.href = window.location.origin;
+    // Force reload the page
+    window.location.reload();
   };
 
   if (!newVersionAvailable) return null;
