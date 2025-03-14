@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keypad from './Keypad';
+import DotVisualizer from './DotVisualizer';
 import { generateGameProblems, MathProblem } from '../utils/problemGenerator';
 import { saveGameExecution } from '../utils/localStorage';
 
@@ -167,44 +168,111 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
               {/* Problem equation display */}
               <div style={{
                 display: 'flex',
-                justifyContent: 'center',
+                flexDirection: 'column',
                 alignItems: 'center',
-                gap: '10px',
-                marginBottom: '10px'
+                width: '100%'
               }}>
-                <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
-                  {currentProblem.firstNumber}
-                </div>
+                {/* Main container for equation and visualizers */}
                 <div style={{
-                  fontSize: '2.5rem',
-                  fontWeight: 'bold',
-                  margin: '0 8px',
-                  lineHeight: '1'
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                  gap: '10px',
+                  width: '100%'
                 }}>
-                  {currentProblem.operator}
-                </div>
-                <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
-                  {currentProblem.secondNumber}
-                </div>
-                <div style={{ fontSize: '1.8rem', margin: '0 2px' }}>=</div>
-                <div>
-                  <div
-                    className="answer-display"
-                    style={{
-                      backgroundColor: userAnswer ? 'rgba(74, 107, 255, 0.2)' : 'transparent',
-                      padding: '3px 10px',
-                      borderRadius: '8px',
-                      minWidth: '35px',
-                      minHeight: '35px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 'bold',
-                      fontSize: '1.8rem',
-                      border: userAnswer ? '2px solid var(--primary-color)' : '2px dashed #ccc'
-                    }}
-                  >
-                    {userAnswer || '?'}
+                  {/* First number with visualizer */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
+                      {currentProblem.firstNumber}
+                    </div>
+
+                    {mode !== 'mixed100' && (
+                      <div style={{
+                        backgroundColor: 'rgba(74, 107, 255, 0.1)',
+                        padding: '5px 10px',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}>
+                        <DotVisualizer number={currentProblem.firstNumber} color="#4a6bff" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Operator */}
+                  <div style={{
+                    fontSize: '2.5rem',
+                    fontWeight: 'bold',
+                    margin: '0 8px',
+                    lineHeight: '1',
+                    alignSelf: 'flex-start',
+                    paddingBottom: mode !== 'mixed100' ? '30px' : '0' // Add padding to align with visualizers
+                  }}>
+                    {currentProblem.operator}
+                  </div>
+
+                  {/* Second number with visualizer */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
+                      {currentProblem.secondNumber}
+                    </div>
+
+                    {mode !== 'mixed100' && (
+                      <div style={{
+                        backgroundColor: 'rgba(255, 74, 107, 0.1)',
+                        padding: '5px 10px',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}>
+                        <DotVisualizer number={currentProblem.secondNumber} color="#ff4a6b" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Equals sign */}
+                  <div style={{
+                    fontSize: '1.8rem',
+                    margin: '0 2px',
+                    alignSelf: 'flex-start',
+                    paddingBottom: mode !== 'mixed100' ? '30px' : '0' // Add padding to align with visualizers
+                  }}>=</div>
+
+                  {/* Answer box */}
+                  <div style={{
+                    alignSelf: 'flex-start',
+                    paddingBottom: mode !== 'mixed100' ? '30px' : '0' // Add padding to align with visualizers
+                  }}>
+                    <div
+                      className="answer-display"
+                      style={{
+                        backgroundColor: userAnswer ? 'rgba(74, 107, 255, 0.2)' : 'transparent',
+                        padding: '3px 10px',
+                        borderRadius: '8px',
+                        minWidth: '35px',
+                        minHeight: '35px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        fontWeight: 'bold',
+                        fontSize: '1.8rem',
+                        border: userAnswer ? '2px solid var(--primary-color)' : '2px dashed #ccc'
+                      }}
+                    >
+                      {userAnswer || '?'}
+                    </div>
                   </div>
                 </div>
               </div>
