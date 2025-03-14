@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import GameHistory from './GameHistory';
 
 interface InstructionsProps {
   mode: string | null;
@@ -7,6 +9,7 @@ interface InstructionsProps {
 
 const Instructions: React.FC<InstructionsProps> = ({ mode }) => {
   const navigate = useNavigate();
+  const [showHistory, setShowHistory] = useState(false);
 
   if (!mode) {
     navigate('/');
@@ -73,7 +76,42 @@ const Instructions: React.FC<InstructionsProps> = ({ mode }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 style={{ fontSize: '1.5rem', margin: '0.5rem 0' }}>{title}</h2>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: '20px'
+      }}>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/')}
+          style={{
+            fontSize: '0.8rem',
+            padding: '5px 10px',
+            backgroundColor: 'var(--secondary-color)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            marginRight: '15px'
+          }}
+        >
+          ←
+        </motion.button>
+
+        <h2 style={{
+          fontSize: '1.5rem',
+          margin: '0',
+          flex: '1',
+          textAlign: 'center'
+        }}>
+          {title}
+        </h2>
+
+        <div style={{ width: '31px' }}></div> {/* Spacer for balance */}
+      </div>
+
       <div className="card" style={{ padding: '1rem 0.8rem' }}>
         <ul style={{ textAlign: 'left', paddingInlineStart: '15px', margin: '0.5rem 0' }}>
           {instructions.map((instruction, index) => (
@@ -89,14 +127,33 @@ const Instructions: React.FC<InstructionsProps> = ({ mode }) => {
           ))}
         </ul>
       </div>
-      <motion.button
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        onClick={() => navigate('/play')}
-        style={{ marginTop: '0.8rem' }}
-      >
-        Rozpocznij Grę
-      </motion.button>
+      <div style={{ display: 'flex', gap: '10px', marginTop: '0.8rem' }}>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => navigate('/play')}
+        >
+          Rozpocznij Grę
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => setShowHistory(true)}
+          style={{
+            backgroundColor: 'var(--secondary-color)',
+            color: 'white'
+          }}
+        >
+          Historia Gier
+        </motion.button>
+      </div>
+
+      {showHistory && (
+        <GameHistory
+          mode={mode}
+          onClose={() => setShowHistory(false)}
+        />
+      )}
     </motion.div>
   );
 };

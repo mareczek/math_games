@@ -5,3 +5,4 @@ export { default as ResultScreen } from './ResultScreen';
 export { default as Keypad } from './Keypad';
 export { default as DotVisualizer } from './DotVisualizer';
 export { default as Fireworks } from './Fireworks';
+export { default as GameHistory } from './GameHistory';

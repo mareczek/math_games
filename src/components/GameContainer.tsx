@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keypad from './Keypad';
 import { generateGameProblems, MathProblem } from '../utils/problemGenerator';
+import { saveGameExecution } from '../utils/localStorage';
 
 interface GameContainerProps {
   mode: string | null;
@@ -17,6 +18,8 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showingFeedback, setShowingFeedback] = useState(false);
+  const [wrongAnswers, setWrongAnswers] = useState<MathProblem[]>([]);
+  const [userAnswers, setUserAnswers] = useState<number[]>([]);
 
   // Redirect to dashboard if no mode is selected
   useEffect(() => {
@@ -47,15 +50,21 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
     if (!userAnswer || showingFeedback) return;
 
     const isCorrect = parseInt(userAnswer) === currentProblem.answer;
+    const currentUserAnswer = parseInt(userAnswer);
 
     // Show feedback
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     setShowingFeedback(true);
 
-    // Update score
+    // Update score and track wrong answers
     if (isCorrect) {
       setCorrectAnswers(prev => prev + 1);
+    } else {
+      setWrongAnswers(prev => [...prev, currentProblem]);
     }
+
+    // Track user answers
+    setUserAnswers(prev => [...prev, currentUserAnswer]);
 
     // Move to next problem or end game after a delay
     // Give more time for incorrect answers
@@ -70,7 +79,20 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
         setFeedback(null);
       } else {
         // Game complete
-        setScore(isCorrect ? correctAnswers + 1 : correctAnswers);
+        const finalScore = isCorrect ? correctAnswers + 1 : correctAnswers;
+
+        // Save game execution to localStorage
+        if (mode) {
+          saveGameExecution(
+            mode,
+            finalScore,
+            problems.length,
+            wrongAnswers.concat(isCorrect ? [] : [currentProblem]),
+            userAnswers.concat(currentUserAnswer)
+          );
+        }
+
+        setScore(finalScore);
         navigate('/results');
       }
     }, feedbackDelay);
@@ -96,8 +118,39 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
         margin: '0 auto'
       }}
     >
-      <div className="progress">
-        Zadanie {currentProblemIndex + 1} z {problems.length}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: '20px'
+      }}>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/')}
+          style={{
+            fontSize: '0.8rem',
+            padding: '5px 10px',
+            backgroundColor: 'var(--secondary-color)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            marginRight: '15px'
+          }}
+        >
+          ←
+        </motion.button>
+
+        <div className="progress" style={{
+          flex: '1',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}>
+          Zadanie {currentProblemIndex + 1} z {problems.length}
+        </div>
+
+        <div style={{ width: '31px' }}></div> {/* Spacer for balance */}
       </div>
 
       <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
