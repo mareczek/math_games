@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keypad from './Keypad';
+import DotVisualizer from './DotVisualizer';
 import { generateGameProblems, MathProblem } from '../utils/problemGenerator';
 import { saveGameExecution } from '../utils/localStorage';
 
@@ -203,6 +204,31 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Visual representation with dots (only for modes that need visualization) */}
+              {mode !== 'mixed100' && (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  marginTop: '10px',
+                  width: '100%'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '20px', textAlign: 'right', fontSize: '0.8rem' }}>
+                      {currentProblem.firstNumber}:
+                    </div>
+                    <DotVisualizer number={currentProblem.firstNumber} color="#4a6bff" />
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '20px', textAlign: 'right', fontSize: '0.8rem' }}>
+                      {currentProblem.secondNumber}:
+                    </div>
+                    <DotVisualizer number={currentProblem.secondNumber} color="#ff4a6b" />
+                  </div>
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
