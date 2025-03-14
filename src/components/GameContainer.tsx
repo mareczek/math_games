@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keypad from './Keypad';
-import DotVisualizer from './DotVisualizer';
 import { generateGameProblems, MathProblem } from '../utils/problemGenerator';
 import { saveGameExecution } from '../utils/localStorage';
 
@@ -176,7 +175,12 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                 <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
                   {currentProblem.firstNumber}
                 </div>
-                <div style={{ fontSize: '1.8rem', margin: '0 2px' }}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 'bold',
+                  margin: '0 8px',
+                  lineHeight: '1'
+                }}>
                   {currentProblem.operator}
                 </div>
                 <div style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>
@@ -204,46 +208,6 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
                   </div>
                 </div>
               </div>
-
-              {/* Visual representation with dots (only for modes that need visualization) */}
-              {mode !== 'mixed100' && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  gap: '20px',
-                  marginTop: '15px',
-                  width: '100%'
-                }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    backgroundColor: 'rgba(74, 107, 255, 0.1)',
-                    padding: '5px 10px',
-                    borderRadius: '8px'
-                  }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#4a6bff' }}>
-                      {currentProblem.firstNumber}:
-                    </div>
-                    <DotVisualizer number={currentProblem.firstNumber} color="#4a6bff" />
-                  </div>
-
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    backgroundColor: 'rgba(255, 74, 107, 0.1)',
-                    padding: '5px 10px',
-                    borderRadius: '8px'
-                  }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#ff4a6b' }}>
-                      {currentProblem.secondNumber}:
-                    </div>
-                    <DotVisualizer number={currentProblem.secondNumber} color="#ff4a6b" />
-                  </div>
-                </div>
-              )}
             </motion.div>
           </AnimatePresence>
         </div>
