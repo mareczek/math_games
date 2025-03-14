@@ -209,20 +209,35 @@ const GameContainer: React.FC<GameContainerProps> = ({ mode, setScore }) => {
               {mode !== 'mixed100' && (
                 <div style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                  marginTop: '10px',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  gap: '20px',
+                  marginTop: '15px',
                   width: '100%'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '20px', textAlign: 'right', fontSize: '0.8rem' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    backgroundColor: 'rgba(74, 107, 255, 0.1)',
+                    padding: '5px 10px',
+                    borderRadius: '8px'
+                  }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#4a6bff' }}>
                       {currentProblem.firstNumber}:
                     </div>
                     <DotVisualizer number={currentProblem.firstNumber} color="#4a6bff" />
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '20px', textAlign: 'right', fontSize: '0.8rem' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    backgroundColor: 'rgba(255, 74, 107, 0.1)',
+                    padding: '5px 10px',
+                    borderRadius: '8px'
+                  }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#ff4a6b' }}>
                       {currentProblem.secondNumber}:
                     </div>
                     <DotVisualizer number={currentProblem.secondNumber} color="#ff4a6b" />
