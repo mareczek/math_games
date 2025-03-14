@@ -2,6 +2,10 @@
 
 A web-based math training application designed for 8-year-old children, featuring multiple game modes with visual number representation.
 
+## Live Demo
+
+Check out the live application: [Math Training Game](https://mareczek.github.io/math_games/)
+
 ## Features
 
 - **Dashboard** with selectable game modes
@@ -35,8 +39,8 @@ A web-based math training application designed for 8-year-old children, featurin
 1. Clone the repository
 
    ```
-   git clone https://github.com/yourusername/math-training-game.git
-   cd math-training-game
+   git clone https://github.com/mareczek/math_games.git
+   cd math_games
    ```
 
 2. Install dependencies
@@ -51,7 +55,17 @@ A web-based math training application designed for 8-year-old children, featurin
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. Open your browser and navigate to `http://localhost:3000`
+
+### Deployment
+
+To deploy the application to GitHub Pages:
+
+```
+npm run deploy
+```
+
+This will build the application and deploy it to the `gh-pages` branch of your repository.
 
 ## Future Enhancements
 
