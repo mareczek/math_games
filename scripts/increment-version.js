@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -42,3 +43,26 @@ versionJson.version = newVersion;
 fs.writeFileSync(versionJsonPath, JSON.stringify(versionJson, null, 2) + '\n');
 
 console.log('Version updated successfully!');
+
+// Git operations
+try {
+  // Get the root directory of the project
+  const rootDir = path.resolve(__dirname, '..');
+
+  // Stage the changed files
+  console.log('Staging version files...');
+  execSync('git add src/version.ts public/version.json', { cwd: rootDir });
+
+  // Commit the changes
+  console.log('Committing version bump...');
+  execSync(`git commit -m "Bump version to ${newVersion}"`, { cwd: rootDir });
+
+  // Push to origin
+  console.log('Pushing to origin...');
+  execSync('git push origin', { cwd: rootDir });
+
+  console.log('Git operations completed successfully!');
+} catch (error) {
+  console.error('Git operation failed:', error.message);
+  process.exit(1);
+}
